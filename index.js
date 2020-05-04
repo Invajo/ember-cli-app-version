@@ -14,7 +14,7 @@ function gitRepoVersion(options) {
   let prefix;
   if (info) {
     if (info.tag) {
-      prefix = info.tag;
+      return info.tag;
     } else if (info.branch) {
       prefix = info.branch;
     } else {
