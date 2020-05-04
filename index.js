@@ -1,7 +1,6 @@
 'use strict';
 
 const getGitInfo = require('git-repo-info');
-const path = require('path');
 
 function gitRepoVersion(options) {
   options = options || {};
@@ -9,13 +8,10 @@ function gitRepoVersion(options) {
   let includeDate = options.includeDate || false;
   let projectPath = options.projectPath || process.cwd();
   let info = getGitInfo(projectPath);
-  let packageVersion  = require(path.join(projectPath, 'package.json')).version;
 
   let prefix;
-  if (info.tag && !(packageVersion && info.tag.includes(packageVersion))) {
+  if (info.tag) {
     prefix = info.tag;
-  } else if (packageVersion) {
-    prefix = packageVersion;
   } else if (info.branch) {
     prefix = info.branch;
   } else {
