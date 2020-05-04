@@ -8,14 +8,20 @@ function gitRepoVersion(options) {
   let includeDate = options.includeDate || false;
   let projectPath = options.projectPath || process.cwd();
   let info = getGitInfo(projectPath);
+  const path = require('path');
+  let packageVersion  = require(path.join(projectPath, 'package.json')).version;
 
   let prefix;
-  if (info.tag) {
-    prefix = info.tag;
-  } else if (info.branch) {
-    prefix = info.branch;
-  } else {
-    prefix = 'DETACHED_HEAD';
+  if (info) {
+    if (info.tag) {
+      prefix = info.tag;
+    } else if (info.branch) {
+      prefix = info.branch;
+    } else {
+      prefix = 'DETACHED_HEAD';
+    }
+  } else if (packageVersion) {
+    prefix = packageVersion;
   }
 
   let sha = '';
